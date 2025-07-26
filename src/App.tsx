@@ -9,12 +9,14 @@ export default function App() {
     <Router>
       <div className="bg-[#FAFAF7] text-[#85BDCC] font-serif flex flex-col">
         <header className="p-6 text-center shadow-md ">
-          <img
-            src={riseHallSketch}
-            alt="Rise Hall Sketch"
-            className="mx-auto mb-4 h-24"
-          />
-          <h1 className="text-5xl font-bold">Zoe & Ben</h1>
+          <a href="https://www.dine.co.uk/venues/rise-hall/" target="_blank" rel="noopener noreferrer">
+            <img
+              src={riseHallSketch}
+              alt="Rise Hall Sketch"
+              className="mx-auto mb-4 h-24 hover:opacity-80 transition-opacity"
+            />
+          </a>
+          <h1 className="text-6xl">Zoe & Ben</h1>
           <nav className="mt-2 space-x-6">
             <a href="/" className="hover:underline">
               Home
@@ -24,7 +26,7 @@ export default function App() {
             </a>
           </nav>
         </header>
-        <main className="flex-1 p-6">
+        <main className="flex-1">
           <Marquee></Marquee>
           <Routes>
             <Route path="/" element={<Home />} />
