@@ -2,14 +2,18 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Details from "./pages/Details";
 import Marquee from "./components/Marquee";
-import riseHallSketch from "./assets/rise-hall-sketch.PNG";
+import riseHallSketch from "./assets/rise-hall-sketch.jpg";
 
 export default function App() {
   return (
     <Router>
       <div className="bg-[#FAFAF7] text-[#85BDCC] font-serif flex flex-col">
         <header className="p-6 text-center shadow-md ">
-          <a href="https://www.dine.co.uk/venues/rise-hall/" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://www.dine.co.uk/venues/rise-hall/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img
               src={riseHallSketch}
               alt="Rise Hall Sketch"

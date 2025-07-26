@@ -1,5 +1,4 @@
 // Marquee.tsx
-import React from "react";
 import photo1 from "../assets/zoe-showing-ring.jpg";
 import photo2 from "../assets/zoe-showing-ring-portrait.jpg";
 import photo3 from "../assets/venice.jpg";
