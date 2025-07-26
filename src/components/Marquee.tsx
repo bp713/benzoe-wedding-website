@@ -9,13 +9,13 @@ const images = [photo1, photo2, photo3];
 const Marquee = () => {
   return (
     <div className="overflow-hidden py-6 bg-[#FAFAF7]">
-      <div className="flex animate-marquee" style={{ width: '200%' }}>
+      <div className="flex animate-marquee" style={{ width: "200%" }}>
         {[...images, ...images, ...images, ...images].map((src, idx) => (
           <img
             key={idx}
             src={src}
             alt={`marquee-${idx}`}
-            className="h-60 flex-shrink-0"
+            className="h-120 flex-shrink-0"
           />
         ))}
       </div>
