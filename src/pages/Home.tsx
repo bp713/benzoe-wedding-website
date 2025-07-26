@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Marquee from "../components/Marquee";
 
 export default function Home() {
   const [timeLeft, setTimeLeft] = useState({
@@ -31,7 +32,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="text-center p-10">
+    <div className="text-center">
+      <Marquee></Marquee>
+
       <div className="flex justify-center gap-8 mb-4">
         <div className="text-center">
           <div className="text-3xl font-bold">{timeLeft.days}</div>

@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        sans: ['"Cormorant Infant"', "serif"],
         serif: ['"Cormorant Infant"', "serif"],
       },
       colors: {
