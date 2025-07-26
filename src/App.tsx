@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Details from "./pages/Details";
+import EmailSubscribe from "./components/EmailSubscribe";
 import riseHallSketch from "./assets/rise-hall-sketch.jpg";
+import Venue from "./pages/Venue";
 
 export default function App() {
   return (
@@ -32,16 +34,20 @@ export default function App() {
             <Link to="/details" className="hover:underline">
               Details
             </Link>
+            <Link to="/venue" className="hover:underline">
+              Venue
+            </Link>
           </nav>
         </header>
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/details" element={<Details />} />
+            <Route path="/venue" element={<Venue />} />
           </Routes>
         </main>
-        <footer className="text-center p-4 text-sm text-[#85BDCC]/70">
-          © {new Date().getFullYear()} Ben & Zoe
+        <footer className="text-center p-6 text-sm text-[#85BDCC]/70">
+          <EmailSubscribe />© {new Date().getFullYear()} Ben & Zoe
         </footer>
       </div>
     </Router>
