@@ -7,7 +7,7 @@ export default function App() {
   return (
     <Router>
       <div className="bg-[#FAFAF7] text-[#85BDCC] font-serif flex flex-col min-h-screen">
-        <header className="p-6 text-center shadow-md ">
+        <header className="p-6 text-center">
           <a
             href="https://www.dine.co.uk/venues/rise-hall/"
             target="_blank"
