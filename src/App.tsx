@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Details from "./pages/Details";
 import riseHallSketch from "./assets/rise-hall-sketch.jpg";
@@ -26,12 +26,12 @@ export default function App() {
             Zoe & Ben
           </div>
           <nav className="mt-2 space-x-6">
-            <a href="/" className="hover:underline">
+            <Link to="/" className="hover:underline">
               Home
-            </a>
-            <a href="/details" className="hover:underline">
+            </Link>
+            <Link to="/details" className="hover:underline">
               Details
-            </a>
+            </Link>
           </nav>
         </header>
         <main className="flex-1">
