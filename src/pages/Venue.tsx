@@ -7,7 +7,26 @@ export default function Venue() {
 
   return (
     <div className="max-w-2xl mx-auto py-10">
-      <h2 className="text-3xl font-semibold mb-6">Venue</h2>
+      <div className="mb-6">
+        <button
+          onClick={() => setShow3DTour(!show3DTour)}
+          className="w-full text-left p-4 bg-[#85BDCC]/10 rounded-lg hover:bg-[#85BDCC]/20 transition-colors"
+        >
+          <span className="text-lg font-medium">
+            3D Virtual Tour {show3DTour ? "▼" : "▶"}
+          </span>
+        </button>
+        {show3DTour && (
+          <div className="aspect-video mt-4">
+            <iframe
+              src="https://my.matterport.com/show/?m=zWAFFxeUKKR"
+              title="Rise Hall 3D Tour"
+              className="w-full h-full rounded-lg"
+              allowFullScreen
+            ></iframe>
+          </div>
+        )}
+      </div>
 
       <div className="mb-6">
         <button
@@ -25,27 +44,6 @@ export default function Venue() {
               title="Rise Hall Video"
               className="w-full h-full rounded-lg"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-        )}
-      </div>
-
-      <div className="mb-6">
-        <button
-          onClick={() => setShow3DTour(!show3DTour)}
-          className="w-full text-left p-4 bg-[#85BDCC]/10 rounded-lg hover:bg-[#85BDCC]/20 transition-colors"
-        >
-          <span className="text-lg font-medium">
-            3D Virtual Tour {show3DTour ? "▼" : "▶"}
-          </span>
-        </button>
-        {show3DTour && (
-          <div className="aspect-video mt-4">
-            <iframe
-              src="https://my.matterport.com/show/?m=zWAFFxeUKKR"
-              title="Rise Hall 3D Tour"
-              className="w-full h-full rounded-lg"
               allowFullScreen
             ></iframe>
           </div>
