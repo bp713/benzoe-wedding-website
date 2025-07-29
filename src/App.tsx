@@ -1,9 +1,31 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Details from "./pages/Details";
+import Accommodation from "./pages/Accommodation";
 import EmailSubscribe from "./components/EmailSubscribe";
 import riseHallSketch from "./assets/rise-hall-sketch.jpg";
 import Venue from "./pages/Venue";
+
+function Navigation() {
+  const location = useLocation();
+  
+  return (
+    <nav className="mt-2 space-x-6">
+      <Link to="/" className={`hover:underline ${location.pathname === '/' ? 'underline' : ''}`}>
+        Home
+      </Link>
+      <Link to="/details" className={`hover:underline ${location.pathname === '/details' ? 'underline' : ''}`}>
+        Details
+      </Link>
+      <Link to="/venue" className={`hover:underline ${location.pathname === '/venue' ? 'underline' : ''}`}>
+        The Venue
+      </Link>
+      <Link to="/accommodation" className={`hover:underline ${location.pathname === '/accommodation' ? 'underline' : ''}`}>
+        Accommodation
+      </Link>
+    </nav>
+  );
+}
 
 export default function App() {
   return (
@@ -27,23 +49,14 @@ export default function App() {
           >
             Zoe & Ben
           </div>
-          <nav className="mt-2 space-x-6">
-            <Link to="/" className="hover:underline">
-              Home
-            </Link>
-            <Link to="/details" className="hover:underline">
-              Details
-            </Link>
-            <Link to="/venue" className="hover:underline">
-              Venue
-            </Link>
-          </nav>
+          <Navigation />
         </header>
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/details" element={<Details />} />
             <Route path="/venue" element={<Venue />} />
+            <Route path="/accommodation" element={<Accommodation />} />
           </Routes>
         </main>
         <footer className="text-center p-6 text-sm text-[#85BDCC]/70">

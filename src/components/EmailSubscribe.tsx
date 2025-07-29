@@ -26,8 +26,6 @@ export default function EmailSubscribe() {
         }
       );
 
-      console.log(response);
-
       if (response.ok) {
         setStatus("Subscribed!");
         setEmail("");
@@ -65,12 +63,15 @@ export default function EmailSubscribe() {
         </button>
       </form>
       {status && status !== "Subscribing..." && (
-        <div className={`mt-2 px-4 py-2 rounded-lg text-sm text-center ${
-          status === "Subscribed!" 
-            ? "bg-green-100 text-green-800 border border-green-200" 
-            : "bg-red-100 text-red-800 border border-red-200"
-        }`}>
-          {status === "Subscribed!" ? "✓ " : "⚠ "}{status}
+        <div
+          className={`mt-2 px-4 py-2 rounded-lg text-sm text-center ${
+            status === "Subscribed!"
+              ? "bg-green-100 text-green-800 border border-green-200"
+              : "bg-red-100 text-red-800 border border-red-200"
+          }`}
+        >
+          {status === "Subscribed!" ? "✓ " : "⚠ "}
+          {status}
         </div>
       )}
     </div>
