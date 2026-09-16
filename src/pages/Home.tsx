@@ -20,7 +20,7 @@ export default function Home() {
         setTimeLeft({
           days: Math.floor(distance / (1000 * 60 * 60 * 24)),
           hours: Math.floor(
-            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
           ),
           minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
           seconds: Math.floor((distance % (1000 * 60)) / 1000),
@@ -33,28 +33,32 @@ export default function Home() {
 
   return (
     <div className="text-center">
-      <Marquee></Marquee>
+      <Marquee />
 
-      <div className="flex justify-center gap-8 mb-4">
-        <div className="text-center">
-          <div className="text-3xl font-bold">{timeLeft.days}</div>
-          <div className="text-sm">Days</div>
+      <div className="mb-4 flex flex-wrap items-center justify-center gap-3 px-4 sm:gap-8">
+        <div className="min-w-[60px] text-center">
+          <div className="text-2xl font-bold sm:text-3xl">{timeLeft.days}</div>
+          <div className="text-xs sm:text-sm">Days</div>
         </div>
-        <div className="text-center">
-          <div className="text-3xl font-bold">{timeLeft.hours}</div>
-          <div className="text-sm">Hours</div>
+        <div className="min-w-[60px] text-center">
+          <div className="text-2xl font-bold sm:text-3xl">{timeLeft.hours}</div>
+          <div className="text-xs sm:text-sm">Hours</div>
         </div>
-        <div className="text-center">
-          <div className="text-3xl font-bold">{timeLeft.minutes}</div>
-          <div className="text-sm">Minutes</div>
+        <div className="min-w-[60px] text-center">
+          <div className="text-2xl font-bold sm:text-3xl">
+            {timeLeft.minutes}
+          </div>
+          <div className="text-xs sm:text-sm">Minutes</div>
         </div>
-        <div className="text-center">
-          <div className="text-3xl font-bold">{timeLeft.seconds}</div>
-          <div className="text-sm">Seconds</div>
+        <div className="min-w-[60px] text-center">
+          <div className="text-2xl font-bold sm:text-3xl">
+            {timeLeft.seconds}
+          </div>
+          <div className="text-xs sm:text-sm">Seconds</div>
         </div>
       </div>
-      <p className="text-lg">Thursday 29th July 2027</p>
-      <p className="text-lg">Rise Hall, Beverley</p>
+      <p className="text-base sm:text-lg">Thursday 29th July 2027</p>
+      <p className="text-base sm:text-lg">Rise Hall, Beverley</p>
     </div>
   );
 }

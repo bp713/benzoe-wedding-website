@@ -3,7 +3,7 @@ import Navigation from "./Navigation";
 
 const Header = () => {
   return (
-    <header className="p-6 text-center">
+    <header className="px-2 pb-4 pt-6 text-center sm:px-4 sm:pb-6 lg:pt-8">
       <a
         href="https://www.dine.co.uk/venues/rise-hall/"
         target="_blank"
@@ -12,11 +12,11 @@ const Header = () => {
         <img
           src={riseHallSketch}
           alt="Rise Hall Sketch"
-          className="mx-auto mb-4 h-24 hover:opacity-80 transition-opacity"
+          className="mx-auto mb-4 h-20 transition-opacity hover:opacity-80 sm:h-24"
         />
       </a>
       <div
-        className="text-7xl"
+        className="text-5xl sm:text-6xl lg:text-7xl"
         style={{ fontWeight: 200, fontFamily: "Cormorant Infant, serif" }}
       >
         Zoe & Ben

@@ -9,19 +9,21 @@ import Header from "./components/Header";
 export default function App() {
   return (
     <Router>
-      <div className="bg-[#FAFAF7] text-[#85BDCC] font-serif flex flex-col min-h-screen">
-        <Header></Header>
-        <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/details" element={<Details />} />
-            <Route path="/venue" element={<Venue />} />
-            <Route path="/accommodation" element={<Accommodation />} />
-          </Routes>
-        </main>
-        <footer className="text-center p-6 text-sm text-[#85BDCC]/70">
-          <EmailSubscribe />© {new Date().getFullYear()} Ben & Zoe
-        </footer>
+      <div className="bg-[#FAFAF7] text-[#85BDCC] font-serif min-h-screen">
+        <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 sm:px-6 lg:px-8">
+          <Header />
+          <main className="flex-1">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/details" element={<Details />} />
+              <Route path="/venue" element={<Venue />} />
+              <Route path="/accommodation" element={<Accommodation />} />
+            </Routes>
+          </main>
+          <footer className="px-2 py-6 text-center text-sm text-[#85BDCC]/70">
+            <EmailSubscribe />© {new Date().getFullYear()} Ben & Zoe
+          </footer>
+        </div>
       </div>
     </Router>
   );

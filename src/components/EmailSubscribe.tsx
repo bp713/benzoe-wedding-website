@@ -23,7 +23,7 @@ export default function EmailSubscribe() {
             email: email,
             timestamp: new Date().toISOString(),
           }),
-        }
+        },
       );
 
       if (response.ok) {
@@ -41,33 +41,33 @@ export default function EmailSubscribe() {
 
   return (
     <div className="mb-4">
-      <h3 className="text-lg mb-2 text-[#85BDCC]">Stay Up to Date</h3>
+      <h3 className="mb-2 text-lg text-[#85BDCC]">Stay Up to Date</h3>
       <form
         onSubmit={handleSubmit}
-        className="flex justify-center gap-2 max-w-md mx-auto"
+        className="mx-auto flex max-w-md flex-col gap-2 sm:flex-row sm:justify-center"
       >
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
-          className="flex-1 px-3 py-2 border border-[#85BDCC]/30 rounded bg-white/50 text-[#85BDCC] placeholder-[#85BDCC]/60 focus:outline-none focus:border-[#85BDCC]"
+          className="w-full flex-1 rounded border border-[#85BDCC]/30 bg-white/50 px-3 py-2 text-[#85BDCC] placeholder-[#85BDCC]/60 focus:border-[#85BDCC] focus:outline-none sm:w-auto"
           required
         />
         <button
           type="submit"
           disabled={!email || status === "Subscribing..."}
-          className="px-4 py-2 bg-[#85BDCC] text-white rounded hover:bg-[#85BDCC]/80 transition-colors disabled:opacity-50"
+          className="rounded bg-[#85BDCC] px-4 py-2 text-white transition-colors hover:bg-[#85BDCC]/80 disabled:opacity-50 sm:w-auto"
         >
           {status === "Subscribing..." ? "Subscribing..." : "Subscribe"}
         </button>
       </form>
       {status && status !== "Subscribing..." && (
         <div
-          className={`mt-2 px-4 py-2 rounded-lg text-sm text-center ${
+          className={`mt-2 rounded-lg px-4 py-2 text-center text-sm ${
             status === "Subscribed!"
-              ? "bg-green-100 text-green-800 border border-green-200"
-              : "bg-red-100 text-red-800 border border-red-200"
+              ? "border border-green-200 bg-green-100 text-green-800"
+              : "border border-red-200 bg-red-100 text-red-800"
           }`}
         >
           {status === "Subscribed!" ? "✓ " : "⚠ "}
