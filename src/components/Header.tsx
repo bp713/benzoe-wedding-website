@@ -16,8 +16,8 @@ const Header = () => {
         />
       </a>
       <div
-        className="text-5xl sm:text-6xl lg:text-7xl"
-        style={{ fontWeight: 200, fontFamily: "Cormorant Infant, serif" }}
+        className="text-5xl sm:text-6xl lg:text-7xl font-serif"
+        style={{ fontWeight: 200 }}
       >
         Zoe & Ben
       </div>

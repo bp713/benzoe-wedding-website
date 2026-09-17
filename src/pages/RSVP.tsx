@@ -48,8 +48,15 @@ export default function RSVP() {
           We hope you can join us
         </p>
         <h1 className="mb-3 text-3xl font-semibold sm:text-4xl">RSVP</h1>
+        <p className="mb-4 text-base sm:text-lg">
+          Please type your name to find your invitation. You will be able to
+          RSVP for your entire party.
+        </p>
         <p className="text-base sm:text-lg">
-          Search for your name to find your invitation.
+          Please note, unfortunately we are not able to accommodate any plus
+          ones who aren’t named on your invitation. We are also not able to
+          accommodate any under 16s. We hope you understand and are still able
+          to join us on the day.
         </p>
       </div>
 

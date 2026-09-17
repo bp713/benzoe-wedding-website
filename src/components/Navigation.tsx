@@ -8,10 +8,12 @@ import ListItemText from "@mui/material/ListItemText";
 
 const navItems = [
   { label: "Home", to: "/" },
-  { label: "Details", to: "/details" },
+  { label: "Schedule", to: "/schedule" },
   { label: "The Venue", to: "/venue" },
   { label: "Accommodation", to: "/accommodation" },
   { label: "RSVP", to: "/rsvp" },
+  { label: "Registry", to: "/registry" },
+  { label: "FAQs", to: "/faq" },
 ];
 
 function Navigation() {

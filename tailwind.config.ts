@@ -2,14 +2,15 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    fontFamily: {
+      sans: ['"Cormorant Garamond"', "sans-serif"],
+      serif: ['"Cormorant Garamond"', "serif"],
+      heading: ['"Beth Ellen"', "serif"],
+    },
     extend: {
-      fontFamily: {
-        sans: ['"Cormorant Infant"', "serif"],
-        serif: ['"Cormorant Infant"', "serif"],
-      },
       colors: {
         accent: "#85BDCC",
-        background: "#FAFAF7",
+        background: "#FFFFF",
       },
       animation: {
         marquee: "marquee 30s linear infinite",

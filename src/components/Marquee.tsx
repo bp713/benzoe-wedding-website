@@ -7,7 +7,7 @@ const images = [photo1, photo2, photo3];
 
 const Marquee = () => {
   return (
-    <div className="overflow-hidden py-6 bg-[#FAFAF7] relative">
+    <div className="overflow-hidden py-6 bg-[#FFFFF] relative">
       <div className="flex animate-marquee" style={{ width: "200%" }}>
         {[...images, ...images, ...images, ...images].map((src, idx) => (
           <img
@@ -41,9 +41,8 @@ const Marquee = () => {
           </text>
         </svg>
         <div
-          className="absolute text-white text-3xl text-center"
+          className="absolute text-white text-3xl text-center font-serif"
           style={{
-            fontFamily: "Cormorant Infant, serif",
             textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
           }}
         >

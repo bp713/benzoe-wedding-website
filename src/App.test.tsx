@@ -7,7 +7,7 @@ describe("App", () => {
 
     expect(screen.getByText("Zoe & Ben")).toBeInTheDocument();
     expect(screen.getByText("Home")).toBeInTheDocument();
-    expect(screen.getByText("Details")).toBeInTheDocument();
+    expect(screen.getByText("Schedule")).toBeInTheDocument();
     expect(screen.getByText("The Venue")).toBeInTheDocument();
     expect(screen.getByText("Accommodation")).toBeInTheDocument();
   });
