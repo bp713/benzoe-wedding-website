@@ -32,7 +32,7 @@ export default function EmailSubscribe() {
       } else {
         setStatus("Error occurred");
       }
-    } catch (error) {
+    } catch {
       setStatus("Error occurred");
     }
 

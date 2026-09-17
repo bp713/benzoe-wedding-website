@@ -12,7 +12,7 @@ export default function Venue() {
           onClick={() => setShow3DTour(!show3DTour)}
           className="w-full rounded-lg bg-[#85BDCC]/10 p-4 text-left transition-colors hover:bg-[#85BDCC]/20"
         >
-          <span className="text-base font-medium sm:text-lg">
+          <span className="font-heading text-base font-medium sm:text-lg">
             3D Virtual Tour {show3DTour ? "▼" : "▶"}
           </span>
         </button>
@@ -33,7 +33,7 @@ export default function Venue() {
           onClick={() => setShowVideo(!showVideo)}
           className="w-full rounded-lg bg-[#85BDCC]/10 p-4 text-left transition-colors hover:bg-[#85BDCC]/20"
         >
-          <span className="text-base font-medium sm:text-lg">
+          <span className="font-heading text-base font-medium sm:text-lg">
             Video {showVideo ? "▼" : "▶"}
           </span>
         </button>
@@ -55,7 +55,7 @@ export default function Venue() {
           onClick={() => setShowMap(!showMap)}
           className="w-full rounded-lg bg-[#85BDCC]/10 p-4 text-left transition-colors hover:bg-[#85BDCC]/20"
         >
-          <span className="text-base font-medium sm:text-lg">
+          <span className="font-heading text-base font-medium sm:text-lg">
             Location {showMap ? "▼" : "▶"}
           </span>
         </button>
