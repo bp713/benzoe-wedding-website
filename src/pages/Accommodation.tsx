@@ -1,9 +1,6 @@
 export default function Accommodation() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-10">
-      <h2 className="font-heading mb-6 text-3xl font-semibold">
-        Accommodation
-      </h2>
       <div className="space-y-4 text-base sm:text-lg">
         <p>
           Our venue, Rise Hall, is exclusively ours for the wedding, and we’re

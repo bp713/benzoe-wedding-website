@@ -9,7 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 const navItems = [
   { label: "Home", to: "/" },
   { label: "Schedule", to: "/schedule" },
-  { label: "The Venue", to: "/venue" },
+  { label: "About Rise Hall", to: "/venue" },
   { label: "Accommodation", to: "/accommodation" },
   { label: "RSVP", to: "/rsvp" },
   { label: "Registry", to: "/registry" },

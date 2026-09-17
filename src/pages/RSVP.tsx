@@ -44,10 +44,9 @@ export default function RSVP() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-10">
       <div className="mb-8">
-        <p className="mb-2 text-sm uppercase tracking-widest text-[#85BDCC]/80">
+        <p className="font-heading mb-2 text-sm tracking-widest text-[#85BDCC]/80">
           We hope you can join us
         </p>
-        <h1 className="mb-3 text-3xl font-semibold sm:text-4xl">RSVP</h1>
         <p className="mb-4 text-base sm:text-lg">
           Please type your name to find your invitation. You will be able to
           RSVP for your entire party.
