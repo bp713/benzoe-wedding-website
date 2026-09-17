@@ -1,4 +1,5 @@
 import js from "@eslint/js";
+import nextPlugin from "@next/eslint-plugin-next";
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
@@ -6,7 +7,8 @@ import tseslint from "typescript-eslint";
 import { globalIgnores } from "eslint/config";
 
 export default tseslint.config([
-  globalIgnores(["dist", ".next"]),
+  globalIgnores(["dist", ".next", "next-env.d.ts"]),
+  nextPlugin.flatConfig.coreWebVitals,
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
