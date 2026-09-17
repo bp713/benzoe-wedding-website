@@ -1,5 +1,8 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
@@ -17,12 +20,12 @@ const navItems = [
 ];
 
 function Navigation() {
-  const location = useLocation();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setIsOpen(false);
-  }, [location.pathname]);
+  }, [pathname]);
 
   return (
     <div className="mt-3 sm:mt-4">
@@ -75,10 +78,10 @@ function Navigation() {
           {navItems.map(({ label, to }) => (
             <ListItemButton
               key={to}
-              component={Link}
-              to={to}
+              component="a"
+              href={to}
               onClick={() => setIsOpen(false)}
-              selected={location.pathname === to}
+              selected={pathname === to}
               sx={{
                 px: 2,
                 py: 1.5,
@@ -95,7 +98,7 @@ function Navigation() {
                 sx={{
                   "& .MuiListItemText-primary": {
                     fontSize: 14,
-                    fontWeight: location.pathname === to ? 700 : 500,
+                    fontWeight: pathname === to ? 700 : 500,
                     color: "#85BDCC",
                   },
                 }}
@@ -111,10 +114,10 @@ function Navigation() {
         {navItems.map(({ label, to }) => (
           <Link
             key={to}
-            to={to}
+            href={to}
             className={[
               "px-1 py-1 text-base transition-colors hover:underline",
-              location.pathname === to ? "font-semibold underline" : "",
+              pathname === to ? "font-semibold underline" : "",
             ].join(" ")}
           >
             {label}

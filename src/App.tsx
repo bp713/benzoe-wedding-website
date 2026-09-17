@@ -1,18 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Schedule from "./pages/Schedule";
-import Accommodation from "./pages/Accommodation";
+import Home from "./site-pages/Home";
+import Schedule from "./site-pages/Schedule";
+import Accommodation from "./site-pages/Accommodation";
 import EmailSubscribe from "./components/EmailSubscribe";
-import Venue from "./pages/Venue";
+import Venue from "./site-pages/Venue";
 import Header from "./components/Header";
-import RSVP from "./pages/RSVP";
-import Registry from "./pages/Registry";
-import FAQ from "./pages/FAQ";
+import RSVP from "./site-pages/RSVP";
+import Registry from "./site-pages/Registry";
+import FAQ from "./site-pages/FAQ";
 
 export default function App() {
   return (
     <Router>
-      <div className="bg-[#FFFFF] text-[#85BDCC] font-serif min-h-screen">
+      <div className="bg-white text-[#85BDCC] font-serif min-h-screen">
         <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 sm:px-6 lg:px-8">
           <Header />
           <main className="flex-1">

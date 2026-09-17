@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import RSVPDetailsForm from "../components/RSVPDetailsForm";

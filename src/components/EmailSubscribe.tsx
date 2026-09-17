@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 export default function EmailSubscribe() {
@@ -11,20 +13,11 @@ export default function EmailSubscribe() {
     setStatus("Subscribing...");
 
     try {
-      // TODO move key into env variable
-      const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbw0sDPUmtRzdqIhiFQFz-c-fAp0Xo9XWaPH_VJdsIAlVvoQDOA2qV1YJL1K6IBZBfBo/exec",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            email: email,
-            timestamp: new Date().toISOString(),
-          }),
-        },
-      );
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
 
       if (response.ok) {
         setStatus("Subscribed!");

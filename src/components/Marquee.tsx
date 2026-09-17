@@ -1,4 +1,5 @@
 // Marquee.tsx
+import Image from "next/image";
 import photo1 from "../assets/zoe-showing-ring.jpg";
 import photo2 from "../assets/zoe-showing-ring-portrait.jpg";
 import photo3 from "../assets/venice.jpg";
@@ -7,14 +8,16 @@ const images = [photo1, photo2, photo3];
 
 const Marquee = () => {
   return (
-    <div className="overflow-hidden py-6 bg-[#FFFFF] relative">
+    <div className="relative overflow-hidden bg-white py-6">
       <div className="flex animate-marquee" style={{ width: "200%" }}>
         {[...images, ...images, ...images, ...images].map((src, idx) => (
-          <img
+          <Image
             key={idx}
             src={src}
             alt={`marquee-${idx}`}
-            className="h-120 flex-shrink-0"
+            width={240}
+            height={480}
+            className="h-[30rem] w-auto flex-shrink-0 object-contain"
           />
         ))}
       </div>

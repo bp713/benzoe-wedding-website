@@ -1,11 +1,14 @@
 import interlockingHearts from "../assets/interlocking-hearts.svg";
+import Image from "next/image";
 
 export default function Schedule() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-10">
-      <img
+      <Image
         src={interlockingHearts}
         alt="Interlocking Hearts"
+        width={64}
+        height={64}
         className="mb-4 h-16 w-16"
       />
       <p className="mb-8 text-base sm:text-lg">

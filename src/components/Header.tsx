@@ -1,4 +1,5 @@
 import riseHallSketch from "../assets/rise-hall-sketch.jpg";
+import Image from "next/image";
 import Navigation from "./Navigation";
 
 const Header = () => {
@@ -9,10 +10,12 @@ const Header = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img
+        <Image
           src={riseHallSketch}
           alt="Rise Hall Sketch"
-          className="mx-auto mb-4 h-20 transition-opacity hover:opacity-80 sm:h-24"
+          width={240}
+          height={120}
+          className="mx-auto mb-4 h-20 w-auto transition-opacity hover:opacity-80 sm:h-24"
         />
       </a>
       <div
