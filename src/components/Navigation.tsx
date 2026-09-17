@@ -29,6 +29,12 @@ function Navigation() {
       >
         Accommodation
       </Link>
+      <Link
+        to="/rsvp"
+        className={`px-1 py-1 hover:underline ${location.pathname === "/rsvp" ? "underline" : ""}`}
+      >
+        RSVP
+      </Link>
     </nav>
   );
 }

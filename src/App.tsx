@@ -5,6 +5,7 @@ import Accommodation from "./pages/Accommodation";
 import EmailSubscribe from "./components/EmailSubscribe";
 import Venue from "./pages/Venue";
 import Header from "./components/Header";
+import RSVP from "./pages/RSVP";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
               <Route path="/details" element={<Details />} />
               <Route path="/venue" element={<Venue />} />
               <Route path="/accommodation" element={<Accommodation />} />
+              <Route path="/rsvp" element={<RSVP />} />
             </Routes>
           </main>
           <footer className="px-2 py-6 text-center text-sm text-[#85BDCC]/70">
