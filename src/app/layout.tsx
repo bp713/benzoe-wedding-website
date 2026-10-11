@@ -5,6 +5,9 @@ import "../index.css";
 export const metadata: Metadata = {
   title: "Zoe and Ben's Wedding",
   description: "Information for Zoe and Ben's wedding at Rise Hall.",
+  icons: {
+    icon: "/interlocking-hearts.svg",
+  },
 };
 
 export default function RootLayout({
