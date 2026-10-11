@@ -315,7 +315,7 @@ export default function RSVPDetailsForm({
             className="border border-green-200 bg-green-100 px-4 py-3 text-green-800"
             role="status"
           >
-            Your RSVP has been saved to the local response workbook.
+            Your RSVP has been saved. Thank you!
           </p>
         )}
         {submitError && (

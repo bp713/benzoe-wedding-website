@@ -38,7 +38,7 @@ describe("RSVP", () => {
 
     await waitFor(() => {
       expect(screen.getByRole("status")).toHaveTextContent(
-        "saved to the local response workbook",
+        "Your RSVP has been saved. Thank you!",
       );
     });
     expect(fetchMock).toHaveBeenCalledTimes(2);
