@@ -4,12 +4,12 @@ const faqs = [
     answer: (
       <>
         <p>
-          The dress code is formal, but not black tie. This means midi or maxi
-          dresses and suits and ties. Hats and fascinators are optional!
+          The dress code is formal - midi or maxi dresses and suits and ties.
+          Hats and fascinators are optional!
         </p>
         <p className="mt-4">
-          Please avoid white, cream or ivory, as well as trainers, jeans, or
-          sportswear. Our bridesmaids will be wearing powder blue.
+          Please avoid wearing white, cream or ivory and please no trainers,
+          jeans or sportswear. Our bridesmaids will be wearing powder blue.
         </p>
       </>
     ),
@@ -18,9 +18,9 @@ const faqs = [
     question: "What time should I arrive?",
     answer: (
       <p>
-        Our ceremony will begin at 1pm, so please arrive at Rise Hall by 12.30pm
-        at the latest. This will give you plenty of time to find your seat and
-        settle in before the ceremony.
+        Please arrive at Rise Hall by 12.30pm at the latest. The venue is
+        surrounded by country roads, so please allow plenty of time in case of
+        slow-moving traffic.
       </p>
     ),
   },
@@ -28,8 +28,8 @@ const faqs = [
     question: "Where is the ceremony?",
     answer: (
       <p>
-        The ceremony will be held indoors, so there&apos;s no need to worry
-        about the British weather!
+        The ceremony will be held indoors at Rise Hall, so there&apos;s no need
+        to worry about the British weather!
       </p>
     ),
   },
@@ -48,8 +48,7 @@ const faqs = [
         </p>
         <p className="mt-4">
           Once the ceremony is over, please feel free to take as many photos as
-          you like! We&apos;ll be creating a Google Photos album where everyone
-          can share their pictures with us.
+          you like and please do share them with us after the wedding!
         </p>
       </>
     ),
@@ -59,13 +58,19 @@ const faqs = [
     answer: (
       <p>
         We&apos;re only able to accommodate the guests named on your invitation.
-        We hope you understand!
+        We hope you understand.
       </p>
     ),
   },
   {
     question: "Are children invited?",
-    answer: <p>We&apos;ve chosen to have an adults-only wedding.</p>,
+    answer: (
+      <p>
+        {" "}
+        We have chosen to have an adults-only wedding, so there will be no under
+        18s with us on the day. Parents - use this as a night off!
+      </p>
+    ),
   },
   {
     question: "What time does the wedding finish?",
@@ -86,7 +91,7 @@ const faqs = [
         </p>
         <p className="mt-4">
           If you&apos;re staying elsewhere, taxis from the venue will need to be
-          pre-booked, as there is limited mobile signal at Rise Hall. We
+          pre-booked. As there is limited mobile signal at Rise Hall, we
           recommend arranging your taxi in advance rather than relying on
           finding one on the night.
         </p>
@@ -101,11 +106,10 @@ const faqs = [
     question: "Do you have a gift list?",
     answer: (
       <>
-        <p>Your presence at our wedding is the only gift we need!</p>
-        <p className="mt-4">
-          If you would like to give us something, we&apos;ll be accepting
-          contributions towards our honeymoon in Singapore and Bali. You can
-          find more details on our Registry tab.
+        <p>
+          Your presence at our wedding is genuinely the only gift we need.
+          Weddings are expensive to attend and we appreciate everyone making the
+          time and effort to join us on the day.
         </p>
       </>
     ),
@@ -115,16 +119,16 @@ const faqs = [
     answer: (
       <>
         <p>
-          Rise Hall is a historic building and unfortunately the accommodation
-          is not fully accessible. There are stairs and no lift, so please bear
-          this in mind if you&apos;re considering staying overnight.
+          Rise Hall is an historic building and unfortunately the accommodation
+          is not fully accessible. Please bear this in mind if you&apos;re
+          considering staying overnight.
         </p>
         <p className="mt-4">
           The wedding itself, including the toilets, is all on one level.
         </p>
         <p className="mt-4">
           If you have any specific accessibility requirements or concerns,
-          please get in touch with us and we&apos;ll do our best to help.
+          please let us know and we&apos;ll do our best to help.
         </p>
       </>
     ),

@@ -1,11 +1,12 @@
-export type GuestGroup = {
-  id: string;
-  names: string[];
-};
+import type { GuestGroup } from "../types/rsvp";
+
+export type { GuestGroup } from "../types/rsvp";
 
 type RSVPGuestSearchProps = {
   query: string;
   matches: GuestGroup[];
+  loading: boolean;
+  error: string;
   onQueryChange: (query: string) => void;
   onSelect: (group: GuestGroup) => void;
 };
@@ -13,6 +14,8 @@ type RSVPGuestSearchProps = {
 export default function RSVPGuestSearch({
   query,
   matches,
+  loading,
+  error,
   onQueryChange,
   onSelect,
 }: RSVPGuestSearchProps) {
@@ -33,12 +36,18 @@ export default function RSVPGuestSearch({
         autoComplete="name"
         className="w-full rounded border border-[#85BDCC]/40 bg-white/60 px-4 py-3 text-lg text-[#85BDCC] placeholder-[#85BDCC]/60 focus:border-[#85BDCC] focus:outline-none focus:ring-2 focus:ring-[#85BDCC]/20"
       />
-      {query && (
+      {loading && <p className="mt-4 text-sm">Loading the guest list...</p>}
+      {error && (
+        <p className="mt-4 text-base text-red-700" role="alert">
+          {error}
+        </p>
+      )}
+      {query && !loading && !error && (
         <div className="mt-4" aria-live="polite">
           {matches.length ? (
             <div className="space-y-2">
               <p className="text-sm text-[#85BDCC]/70">
-                Select your invitation to continue:
+                Select your name to continue:
               </p>
               {matches.map((group) => (
                 <button

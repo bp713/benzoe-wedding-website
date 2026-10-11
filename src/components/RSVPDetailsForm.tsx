@@ -1,78 +1,303 @@
 import type { FormEvent } from "react";
-import RSVPAttendance, { type Attendance } from "./RSVPAttendance";
+import type { GuestResponse } from "../types/rsvp";
+
+const emptyResponse: GuestResponse = {
+  attending: "",
+  wednesdayNight: "",
+  accommodation: "",
+  diet: "",
+  hasDietaryRequirements: "",
+  dietaryDetails: "",
+};
 
 type RSVPDetailsFormProps = {
   names: string[];
-  attendance: Attendance;
-  attendingNames: string[];
-  accommodation: string;
-  dietary: string;
+  responses: Record<string, GuestResponse>;
+  questions: string;
   submitted: boolean;
-  onAttendanceChange: (attendance: Attendance) => void;
-  onAttendingNamesChange: (names: string[]) => void;
-  onAccommodationChange: (accommodation: string) => void;
-  onDietaryChange: (dietary: string) => void;
+  saving: boolean;
+  submitError: string;
+  onResponseChange: (
+    name: string,
+    field: keyof GuestResponse,
+    value: string,
+  ) => void;
+  onQuestionsChange: (questions: string) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
 export default function RSVPDetailsForm({
   names,
-  attendance,
-  attendingNames,
-  accommodation,
-  dietary,
+  responses,
+  questions,
   submitted,
-  onAttendanceChange,
-  onAttendingNamesChange,
-  onAccommodationChange,
-  onDietaryChange,
+  saving,
+  submitError,
+  onResponseChange,
+  onQuestionsChange,
   onSubmit,
 }: RSVPDetailsFormProps) {
-  const canSubmit =
-    attendance !== "" && (attendance !== "some" || attendingNames.length > 0);
-
   return (
     <section aria-labelledby="rsvp-form-heading">
       <h2 id="rsvp-form-heading" className="mb-2 text-2xl font-semibold">
-        RSVP for {names.join(" & ")}
+        Your details
       </h2>
       <p className="mb-6 text-base text-[#85BDCC]/80">
-        Please complete one response for everyone on this invitation.
+        Please complete one response per invited guest, using the name on your
+        invitation.
       </p>
 
       <form onSubmit={onSubmit} className="space-y-5">
-        <RSVPAttendance
-          names={names}
-          attendance={attendance}
-          attendingNames={attendingNames}
-          onAttendanceChange={onAttendanceChange}
-          onAttendingNamesChange={onAttendingNamesChange}
-        />
+        {names.map((name) => {
+          const response = responses[name] ?? emptyResponse;
 
-        <label className="block text-lg font-semibold" htmlFor="accommodation">
-          Accommodation
-          <select
-            id="accommodation"
-            value={accommodation}
-            onChange={(event) => onAccommodationChange(event.target.value)}
-            className="mt-2 block w-full rounded border border-[#85BDCC]/40 bg-white/60 px-3 py-3 text-base font-normal focus:border-[#85BDCC] focus:outline-none focus:ring-2 focus:ring-[#85BDCC]/20"
-          >
-            <option value="">Please choose</option>
-            <option value="two-nights">Stay both nights</option>
-            <option value="wedding-night">Stay the night of the wedding</option>
-            <option value="own-accommodation">
-              Arrange our own accommodation
-            </option>
-          </select>
-        </label>
+          return (
+            <div key={name} className="space-y-6">
+              <label
+                className="block text-lg font-semibold"
+                htmlFor={`guest-name-${name}`}
+              >
+                Name
+                <input
+                  id={`guest-name-${name}`}
+                  value={name}
+                  readOnly
+                  className="mt-2 block w-full rounded border border-[#85BDCC]/40 bg-white/60 px-3 py-3 text-base font-normal"
+                />
+              </label>
 
-        <label className="block text-lg font-semibold" htmlFor="dietary">
-          Dietary requirements
+              <fieldset className="space-y-3 border-t border-[#85BDCC]/30 pt-5">
+                <legend className="text-xl font-semibold">
+                  The wedding — Thursday 29 July 2027
+                </legend>
+                <p className="text-base">Are you able to attend our wedding?</p>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name={`attending-${name}`}
+                    value="yes"
+                    checked={response.attending === "yes"}
+                    onChange={() => onResponseChange(name, "attending", "yes")}
+                    required
+                  />
+                  Yes, I’ll be there
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name={`attending-${name}`}
+                    value="no"
+                    checked={response.attending === "no"}
+                    onChange={() => onResponseChange(name, "attending", "no")}
+                    required
+                  />
+                  No, I’m sorry I can’t make it
+                </label>
+              </fieldset>
+
+              {response.attending === "yes" && (
+                <>
+                  <fieldset className="space-y-3 border-t border-[#85BDCC]/30 pt-5">
+                    <legend className="text-xl font-semibold">
+                      The night before — Wednesday 28 July 2027
+                    </legend>
+                    <p>
+                      We’re having a relaxed get-together at Rise Hall on
+                      Wednesday evening for those staying at the venue that
+                      night (food and drinks provided).
+                    </p>
+                    <p>
+                      It’s completely optional, but if you’d like to join us,
+                      you will need to stay at Rise Hall on Wednesday night.
+                      This is a requirement of our venue.
+                    </p>
+                    <p>
+                      Rooms are for two people. The cost is approximately £258
+                      per room, per night, and this includes a continental
+                      breakfast.
+                    </p>
+                    <p>
+                      We will be organising the accommodation and collecting
+                      payment, so we will confirm final details closer to the
+                      time. Please note, accommodation isn’t guaranteed until we
+                      come back to you with confirmation.
+                    </p>
+                    <p className="font-semibold">
+                      Will you be joining us and staying at Rise Hall on
+                      Wednesday evening for our pre-wedding get-together?
+                    </p>
+                    {(["yes", "no"] as const).map((value) => (
+                      <label key={value} className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name={`wednesday-${name}`}
+                          value={value}
+                          checked={response.wednesdayNight === value}
+                          onChange={() =>
+                            onResponseChange(name, "wednesdayNight", value)
+                          }
+                          required
+                        />
+                        {value === "yes" ? "Yes" : "No"}
+                      </label>
+                    ))}
+                  </fieldset>
+
+                  <fieldset className="space-y-3 border-t border-[#85BDCC]/30 pt-5">
+                    <legend className="text-xl font-semibold">
+                      Wedding night accommodation — Thursday 29 July 2027
+                    </legend>
+                    <p>
+                      We are lucky enough that Rise Hall and its 31 rooms are
+                      reserved for us and our guests the night before and the
+                      night of the wedding. If you would prefer not to stay at
+                      the venue, that’s absolutely fine, please just let us know
+                      below.
+                    </p>
+                    <p>
+                      Rooms are for two people. The cost is approximately £258
+                      per room, per night, and this includes a continental
+                      breakfast.
+                    </p>
+                    <p>
+                      We will be organising the accommodation and collecting
+                      payment, so we will confirm final details closer to the
+                      time. Please note, accommodation isn’t guaranteed until we
+                      come back to you with confirmation.
+                    </p>
+                    <p className="font-semibold">
+                      Would you like accommodation at Rise Hall on Thursday
+                      night (the night of the wedding)?
+                    </p>
+                    {(["yes", "no"] as const).map((value) => (
+                      <label key={value} className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name={`accommodation-${name}`}
+                          value={value}
+                          checked={response.accommodation === value}
+                          onChange={() =>
+                            onResponseChange(name, "accommodation", value)
+                          }
+                          required
+                        />
+                        {value === "yes" ? "Yes" : "No"}
+                      </label>
+                    ))}
+                  </fieldset>
+
+                  <fieldset className="space-y-3 border-t border-[#85BDCC]/30 pt-5">
+                    <legend className="text-xl font-semibold">
+                      Dietary requirements
+                    </legend>
+                    <label
+                      className="block text-base font-semibold"
+                      htmlFor={`diet-${name}`}
+                    >
+                      Are you vegetarian or vegan?
+                      <select
+                        id={`diet-${name}`}
+                        value={response.diet}
+                        onChange={(event) =>
+                          onResponseChange(name, "diet", event.target.value)
+                        }
+                        className="mt-2 block w-full rounded border border-[#85BDCC]/40 bg-white/60 px-3 py-3 text-base font-normal"
+                        required
+                      >
+                        <option value="">Please choose</option>
+                        <option value="none">Neither</option>
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="vegan">Vegan</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </label>
+                    {response.diet === "other" && (
+                      <label
+                        className="block text-base font-semibold"
+                        htmlFor={`diet-other-${name}`}
+                      >
+                        Please state your other dietary requirement
+                        <textarea
+                          id={`diet-other-${name}`}
+                          value={response.dietaryDetails}
+                          onChange={(event) =>
+                            onResponseChange(
+                              name,
+                              "dietaryDetails",
+                              event.target.value,
+                            )
+                          }
+                          rows={2}
+                          required
+                          className="mt-2 block w-full rounded border border-[#85BDCC]/40 bg-white/60 px-3 py-3 text-base font-normal"
+                        />
+                      </label>
+                    )}
+                    <p className="font-semibold">
+                      Do you have any other dietary requirements or allergies we
+                      should be aware of?
+                    </p>
+                    {(["no", "yes"] as const).map((value) => (
+                      <label key={value} className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name={`dietary-${name}`}
+                          value={value}
+                          checked={response.hasDietaryRequirements === value}
+                          onChange={() =>
+                            onResponseChange(
+                              name,
+                              "hasDietaryRequirements",
+                              value,
+                            )
+                          }
+                          required
+                        />
+                        {value === "yes" ? "Yes" : "No"}
+                      </label>
+                    ))}
+                    {response.hasDietaryRequirements === "yes" && (
+                      <label
+                        className="block text-base font-semibold"
+                        htmlFor={`dietary-details-${name}`}
+                      >
+                        Please provide details
+                        <textarea
+                          id={`dietary-details-${name}`}
+                          value={response.dietaryDetails}
+                          onChange={(event) =>
+                            onResponseChange(
+                              name,
+                              "dietaryDetails",
+                              event.target.value,
+                            )
+                          }
+                          rows={3}
+                          required
+                          className="mt-2 block w-full rounded border border-[#85BDCC]/40 bg-white/60 px-3 py-3 text-base font-normal"
+                        />
+                      </label>
+                    )}
+                  </fieldset>
+                </>
+              )}
+            </div>
+          );
+        })}
+
+        <label
+          className="block border-t border-[#85BDCC]/30 pt-5 text-lg font-semibold"
+          htmlFor="questions"
+        >
+          Questions
+          <span className="mt-2 block text-base font-normal">
+            Is there anything you’d like to ask us about the wedding,
+            accommodation or anything else?
+          </span>
           <textarea
-            id="dietary"
-            value={dietary}
-            onChange={(event) => onDietaryChange(event.target.value)}
-            placeholder="Tell us about any dietary requirements"
+            id="questions"
+            value={questions}
+            onChange={(event) => onQuestionsChange(event.target.value)}
             rows={3}
             className="mt-2 block w-full rounded border border-[#85BDCC]/40 bg-white/60 px-3 py-3 text-base font-normal placeholder-[#85BDCC]/60 focus:border-[#85BDCC] focus:outline-none focus:ring-2 focus:ring-[#85BDCC]/20"
           />
@@ -80,17 +305,25 @@ export default function RSVPDetailsForm({
 
         <button
           type="submit"
-          disabled={!canSubmit}
+          disabled={saving}
           className="rounded bg-[#85BDCC] px-5 py-3 text-lg text-white transition-colors hover:bg-[#85BDCC]/80 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          Send RSVP
+          {saving ? "Saving RSVP..." : "Submit RSVP"}
         </button>
         {submitted && (
           <p
             className="border border-green-200 bg-green-100 px-4 py-3 text-green-800"
             role="status"
           >
-            Thank you. Your RSVP has been recorded for now.
+            Your RSVP has been saved to the local response workbook.
+          </p>
+        )}
+        {submitError && (
+          <p
+            className="border border-red-200 bg-red-100 px-4 py-3 text-red-800"
+            role="alert"
+          >
+            {submitError}
           </p>
         )}
       </form>

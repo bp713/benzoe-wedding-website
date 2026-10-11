@@ -27,3 +27,4 @@ dist-ssr
 *.sw?
 
 /.next
+data/wedding-rsvp-local.xlsx

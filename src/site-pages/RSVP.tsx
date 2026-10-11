@@ -1,28 +1,48 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import RSVPDetailsForm from "../components/RSVPDetailsForm";
-import RSVPGuestSearch, {
-  type GuestGroup,
-} from "../components/RSVPGuestSearch";
-import type { Attendance } from "../components/RSVPAttendance";
-
-const guestGroups: GuestGroup[] = [
-  { id: "ben-parents", names: ["Sarah Pepers", "Martin Pepers"] },
-  { id: "zoe-parents", names: ["Steve McPhie", "Lindsay McPhie"] },
-];
+import RSVPGuestSearch from "../components/RSVPGuestSearch";
+import type { GuestGroup, GuestResponse } from "../types/rsvp";
 
 const normalise = (value: string) => value.trim().toLowerCase();
 
 export default function RSVP() {
+  const [guestGroups, setGuestGroups] = useState<GuestGroup[]>([]);
+  const [loadingGuests, setLoadingGuests] = useState(true);
+  const [loadError, setLoadError] = useState("");
   const [query, setQuery] = useState("");
   const [selectedGroup, setSelectedGroup] = useState<GuestGroup | null>(null);
-  const [attendance, setAttendance] = useState<Attendance>("");
-  const [attendingNames, setAttendingNames] = useState<string[]>([]);
-  const [accommodation, setAccommodation] = useState("");
-  const [dietary, setDietary] = useState("");
+  const [responses, setResponses] = useState<Record<string, GuestResponse>>({});
+  const [questions, setQuestions] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch("/api/rsvp", { cache: "no-store" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Could not load the guest list.");
+        return (await response.json()) as GuestGroup[];
+      })
+      .then((groups) => {
+        if (!cancelled) setGuestGroups(groups);
+      })
+      .catch(() => {
+        if (!cancelled)
+          setLoadError("Could not load the local guest workbook.");
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingGuests(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const matches = useMemo(() => {
     const search = normalise(query);
@@ -31,15 +51,80 @@ export default function RSVP() {
     return guestGroups.filter((group) =>
       group.names.some((name) => normalise(name).includes(search)),
     );
-  }, [query]);
+  }, [guestGroups, query]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmitted(true);
+    if (!selectedGroup) return;
+
+    setSaving(true);
+    setSubmitError("");
+    setSubmitted(false);
+
+    try {
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          groupId: selectedGroup.id,
+          responses: Object.fromEntries(
+            selectedGroup.names.map((name) => [name, responses[name]]),
+          ),
+          questions,
+        }),
+      });
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) throw new Error(result.error ?? "Could not save RSVP.");
+      setSubmitted(true);
+      setGuestGroups((current) =>
+        current.map((guest) =>
+          guest.id === selectedGroup.id
+            ? {
+                ...guest,
+                responses: Object.fromEntries(
+                  selectedGroup.names.map((name) => [name, responses[name]]),
+                ),
+                questions,
+              }
+            : guest,
+        ),
+      );
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Could not save RSVP.",
+      );
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleResponseChange = (
+    name: string,
+    field: keyof GuestResponse,
+    value: string,
+  ) => {
+    setResponses((current) => ({
+      ...current,
+      [name]: { ...current[name], [field]: value },
+    }));
+    setSubmitted(false);
+    setSubmitError("");
   };
 
   const handleSelect = (group: GuestGroup) => {
     setSelectedGroup(group);
+    setResponses((current) => {
+      const restored = { ...current };
+      for (const name of group.names) {
+        const savedResponse = group.responses?.[name];
+        if (!restored[name] && savedResponse) {
+          restored[name] = savedResponse;
+        }
+      }
+      return restored;
+    });
+    setQuestions(group.questions ?? "");
     setSubmitted(false);
   };
 
@@ -47,24 +132,41 @@ export default function RSVP() {
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-10">
       <div className="mb-8">
         <p className="font-heading mb-2 text-sm tracking-widest text-[#85BDCC]/80">
-          We hope you can join us
+          Wedding RSVP
         </p>
         <p className="mb-4 text-base sm:text-lg">
-          Please type your name to find your invitation. You will be able to
-          RSVP for your entire party.
+          We’re so excited to celebrate our wedding with you!
         </p>
-        <p className="text-base sm:text-lg">
-          Please note, unfortunately we are not able to accommodate any plus
-          ones who aren’t named on your invitation. We are also not able to
-          accommodate any under 16s. We hope you understand and are still able
-          to join us on the day.
+        <p className="mb-4 text-base sm:text-lg">
+          We just need a few details from you to help us get everything
+          organised and make sure the day runs as smoothly as possible.
         </p>
+        <p className="mb-4 text-base sm:text-lg">
+          Please complete this form by [XXX].
+        </p>
+        <p className="mb-4 text-base sm:text-lg">
+          Please complete one response per invited guest, using the name on your
+          invitation.
+        </p>
+        <section className="space-y-3 border-t border-[#85BDCC]/30 pt-5">
+          <h2 className="text-xl font-semibold">A couple of important bits</h2>
+          <p>
+            Please note that we are only able to accommodate the people named on
+            your invitation.
+          </p>
+          <p>
+            We have chosen to have an adults-only wedding - we hope you
+            understand and are still able to join us!
+          </p>
+        </section>
       </div>
 
       {!selectedGroup ? (
         <RSVPGuestSearch
           query={query}
           matches={matches}
+          loading={loadingGuests}
+          error={loadError}
           onQueryChange={setQuery}
           onSelect={handleSelect}
         />
@@ -79,15 +181,13 @@ export default function RSVP() {
           </button>
           <RSVPDetailsForm
             names={selectedGroup.names}
-            attendance={attendance}
-            attendingNames={attendingNames}
-            accommodation={accommodation}
-            dietary={dietary}
+            responses={responses}
+            questions={questions}
             submitted={submitted}
-            onAttendanceChange={setAttendance}
-            onAttendingNamesChange={setAttendingNames}
-            onAccommodationChange={setAccommodation}
-            onDietaryChange={setDietary}
+            saving={saving}
+            submitError={submitError}
+            onResponseChange={handleResponseChange}
+            onQuestionsChange={setQuestions}
             onSubmit={handleSubmit}
           />
         </>
