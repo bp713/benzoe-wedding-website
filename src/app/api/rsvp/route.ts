@@ -174,13 +174,6 @@ export async function GET() {
 let writeQueue: Promise<void> = Promise.resolve();
 
 export async function POST(request: Request) {
-  if (process.env.NODE_ENV !== "development") {
-    return NextResponse.json(
-      { error: "Local RSVP is only available in development" },
-      { status: 403 },
-    );
-  }
-
   let body: unknown;
   try {
     body = await request.json();
