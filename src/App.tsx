@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./site-pages/Home";
 import Schedule from "./site-pages/Schedule";
 import Accommodation from "./site-pages/Accommodation";
-import EmailSubscribe from "./components/EmailSubscribe";
 import Venue from "./site-pages/Venue";
 import Header from "./components/Header";
 import RSVP from "./site-pages/RSVP";
@@ -26,9 +25,6 @@ export default function App() {
               <Route path="/faq" element={<FAQ />} />
             </Routes>
           </main>
-          <footer className="px-2 py-6 text-center text-sm text-[#85BDCC]/70">
-            <EmailSubscribe />© {new Date().getFullYear()} Ben & Zoe
-          </footer>
         </div>
       </div>
     </Router>
