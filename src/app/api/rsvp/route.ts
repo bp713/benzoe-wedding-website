@@ -195,7 +195,14 @@ export async function POST(request: Request) {
   }
 
   const groupId = body.groupId;
-  const guestResponses = body.responses;
+  const guestResponses = Object.fromEntries(
+    Object.entries(body.responses).map(([name, response]) => [
+      name,
+      isRecord(response) && response.dietaryDetails === undefined
+        ? { ...response, dietaryDetails: "" }
+        : response,
+    ]),
+  );
   const questions = body.questions;
 
   if (!Object.values(guestResponses).every(isGuestResponse)) {
