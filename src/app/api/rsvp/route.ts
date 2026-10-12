@@ -23,6 +23,47 @@ const responsePath = path.join(
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null;
 
+function logRsvpError(
+  stage: string,
+  code: string,
+  groupId = "",
+  guestNames: string[] = [],
+  error?: unknown,
+) {
+  const secrets = [process.env.GOOGLE_RSVP_TOKEN].filter(
+    (secret): secret is string => Boolean(secret),
+  );
+  const redact = (value: string) =>
+    secrets
+      .reduce(
+        (sanitized, secret) => sanitized.split(secret).join("[REDACTED]"),
+        value,
+      )
+      .replace(/([?&](?:token|key|secret)=)[^&\s]+/gi, "$1[REDACTED]");
+  const errorDetails =
+    error instanceof Error
+      ? {
+          name: error.name,
+          message: redact(error.message).slice(0, 1000),
+          stack: error.stack ? redact(error.stack).slice(0, 3000) : undefined,
+        }
+      : error === undefined
+        ? undefined
+        : { message: redact(String(error)).slice(0, 1000) };
+
+  console.error(
+    "RSVP_ERROR",
+    JSON.stringify({
+      timestamp: new Date().toISOString(),
+      stage,
+      code,
+      groupId,
+      guestNames: guestNames.slice(0, 10),
+      error: errorDetails,
+    }),
+  );
+}
+
 function getGuestGroups(sheet: ExcelJS.Worksheet): GuestGroup[] {
   const groups: GuestGroup[] = [];
   let current: GuestGroup | undefined;
@@ -128,7 +169,8 @@ async function getGoogleGuestGroups() {
     return NextResponse.json(groups, {
       headers: { "Cache-Control": "no-store" },
     });
-  } catch {
+  } catch (error) {
+    logRsvpError("sheets-read", "GUEST_LIST_REQUEST_FAILED", "", [], error);
     return NextResponse.json(
       { error: "Could not load guests from Google Sheets" },
       { status: 502 },
@@ -163,7 +205,8 @@ export async function GET() {
       })),
       { headers: { "Cache-Control": "no-store" } },
     );
-  } catch {
+  } catch (error) {
+    logRsvpError("local-read", "GUEST_WORKBOOK_READ_FAILED", "", [], error);
     return NextResponse.json(
       { error: "Could not load the local guest workbook" },
       { status: 500 },
@@ -177,7 +220,8 @@ export async function POST(request: Request) {
   let body: unknown;
   try {
     body = await request.json();
-  } catch {
+  } catch (error) {
+    logRsvpError("request", "INVALID_JSON", "", [], error);
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
 
@@ -188,6 +232,14 @@ export async function POST(request: Request) {
     typeof body.questions !== "string" ||
     body.questions.length > 2000
   ) {
+    logRsvpError(
+      "validation",
+      "INVALID_PAYLOAD",
+      isRecord(body) && typeof body.groupId === "string" ? body.groupId : "",
+      isRecord(body) && isRecord(body.responses)
+        ? Object.keys(body.responses)
+        : [],
+    );
     return NextResponse.json(
       { error: "Invalid RSVP response" },
       { status: 400 },
@@ -206,6 +258,12 @@ export async function POST(request: Request) {
   const questions = body.questions;
 
   if (!Object.values(guestResponses).every(isGuestResponse)) {
+    logRsvpError(
+      "validation",
+      "INVALID_ANSWERS",
+      groupId,
+      Object.keys(guestResponses),
+    );
     return NextResponse.json(
       { error: "Invalid RSVP response" },
       { status: 400 },
@@ -215,6 +273,12 @@ export async function POST(request: Request) {
   if (process.env.NODE_ENV !== "development") {
     const config = getGoogleRsvpConfig();
     if (!config) {
+      logRsvpError(
+        "configuration",
+        "GOOGLE_RSVP_NOT_CONFIGURED",
+        groupId,
+        Object.keys(guestResponses),
+      );
       return NextResponse.json(
         { error: "Google Sheets RSVP is not configured" },
         { status: 503 },
@@ -235,10 +299,21 @@ export async function POST(request: Request) {
         }),
         cache: "no-store",
       });
-      if (!response.ok) throw new Error("Google Sheets request failed");
+      if (!response.ok) {
+        throw new Error(
+          `Google Sheets request failed with status ${response.status}`,
+        );
+      }
 
       const result: unknown = await response.json();
       if (!isRecord(result) || result.success !== true) {
+        logRsvpError(
+          "sheets-write",
+          "SHEETS_REJECTED",
+          groupId,
+          Object.keys(guestResponses),
+          isRecord(result) ? result.error : result,
+        );
         return NextResponse.json(
           {
             error:
@@ -251,7 +326,14 @@ export async function POST(request: Request) {
       }
 
       return NextResponse.json({ success: true });
-    } catch {
+    } catch (error) {
+      logRsvpError(
+        "sheets-write",
+        "SHEETS_REQUEST_FAILED",
+        groupId,
+        Object.keys(guestResponses),
+        error,
+      );
       return NextResponse.json(
         { error: "Could not save RSVP to Google Sheets" },
         { status: 502 },
@@ -269,6 +351,7 @@ export async function POST(request: Request) {
       !group ||
       !group.names.every((name) => isGuestResponse(guestResponses[name]))
     ) {
+      logRsvpError("local-write", "UNKNOWN_INVITATION", groupId);
       throw new Error("RSVP response does not match a guest invitation");
     }
 
@@ -314,6 +397,15 @@ export async function POST(request: Request) {
     const isInvalidResponse =
       error instanceof Error &&
       error.message === "RSVP response does not match a guest invitation";
+    if (!isInvalidResponse) {
+      logRsvpError(
+        "local-write",
+        "LOCAL_WORKBOOK_WRITE_FAILED",
+        groupId,
+        Object.keys(guestResponses),
+        error,
+      );
+    }
     return NextResponse.json(
       {
         error: isInvalidResponse
