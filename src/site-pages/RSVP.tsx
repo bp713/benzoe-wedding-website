@@ -142,11 +142,11 @@ export default function RSVP() {
           organised and make sure the day runs as smoothly as possible.
         </p>
         <p className="mb-4 text-base sm:text-lg">
-          Please complete this form by [XXX].
+          Please complete this form by <b>1st April 2027</b>.
         </p>
         <p className="mb-4 text-base sm:text-lg">
-          Please complete one response per invited guest, using the name on your
-          invitation.
+          Please search any of the named guests on your invitation to complete
+          your RSVP.
         </p>
         <section className="space-y-3 border-t border-[#85BDCC]/30 pt-5">
           <h2 className="text-xl font-semibold">A couple of important bits</h2>

@@ -68,7 +68,7 @@ const faqs = [
       <p>
         {" "}
         We have chosen to have an adults-only wedding, so there will be no under
-        18s with us on the day. Parents - use this as a night off!
+        16s with us on the day. Parents - use this as a night off!
       </p>
     ),
   },
