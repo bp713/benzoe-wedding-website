@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import Header from "../components/Header";
 import "../index.css";
 
@@ -24,6 +25,7 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
           </div>
         </div>
+        <Analytics />
       </body>
     </html>
   );
