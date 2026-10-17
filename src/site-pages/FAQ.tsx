@@ -18,7 +18,7 @@ const faqs = [
     question: "What time should I arrive?",
     answer: (
       <p>
-        Please arrive at Rise Hall by 12.30pm at the latest. The venue is
+        We anticipate that guests will need to arrive at Rise Hall by 12:15pm at the latest, but please check back closer to the time for final timings. The venue is
         surrounded by country roads, so please allow plenty of time in case of
         slow-moving traffic.
       </p>

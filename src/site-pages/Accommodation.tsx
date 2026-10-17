@@ -23,6 +23,30 @@ export default function Accommodation() {
           you to confirm which room you are in.
         </p>
 
+        <section className="space-y-3 pt-3">
+          <h2 className="font-heading text-xl font-medium sm:text-2xl">
+            A note about the night before
+          </h2>
+          <div className="space-y-3">
+            <p>
+              We’re hosting a relaxed get-together at Rise Hall on Wednesday
+              28th July (the night before the wedding) for those staying at the
+              venue that night. Timings are TBC but we expect it to be from
+              around 5pm.
+            </p>
+            <p>
+              There’ll be some food and drinks provided, and it’ll be a chance
+              to get into the wedding spirit before the big day. Don’t worry, it
+              won’t be a late one - we’ll all need our beauty sleep!
+            </p>
+            <p>
+              It’s completely optional, but if you’d like to join us, you will
+              need to stay at Rise Hall on Wednesday night. This is a
+              requirement of our venue.
+            </p>
+          </div>
+        </section>
+
         <details className="group rounded-lg bg-[#85BDCC]/10 transition-colors open:bg-[#85BDCC]/15">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-4 text-left text-base font-medium font-heading marker:hidden sm:text-lg">
             How much are the rooms?
@@ -61,36 +85,6 @@ export default function Accommodation() {
               We’ll do our best to accommodate everyone who would like to stay
               at Rise Hall but, in the interest of fairness, we will prioritise
               rooms for guests who are staying two nights.
-            </p>
-          </div>
-        </details>
-
-        <details className="group rounded-lg bg-[#85BDCC]/10 transition-colors open:bg-[#85BDCC]/15">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-4 text-left text-base font-medium font-heading marker:hidden sm:text-lg">
-            A note about the night before
-            <span
-              aria-hidden="true"
-              className="text-lg transition-transform group-open:rotate-90"
-            >
-              ▶
-            </span>
-          </summary>
-          <div className="space-y-4 px-4 pb-4 text-base sm:text-lg">
-            <p>
-              We’re hosting a relaxed get-together at Rise Hall on Wednesday
-              28th July (the night before the wedding) for those staying at the
-              venue that night. Timings are TBC but we expect it to be from
-              around 5pm.
-            </p>
-            <p>
-              There’ll be some food and drinks provided, and it’ll be a chance
-              to get into the wedding spirit before the big day. Don’t worry, it
-              won’t be a late one - we’ll all need our beauty sleep!
-            </p>
-            <p>
-              It’s completely optional, but if you’d like to join us, you will
-              need to stay at Rise Hall on Wednesday night. This is a
-              requirement of our venue.
             </p>
           </div>
         </details>

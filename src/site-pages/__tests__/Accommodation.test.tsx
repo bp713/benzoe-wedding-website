@@ -35,15 +35,26 @@ describe("Accommodation", () => {
     expect(screen.getByText("Nearby hotels")).toBeInTheDocument();
   });
 
-  test("shows accommodation headings as closed drawers that can be opened", () => {
+  test("shows the night-before note as a heading before the FAQ drawers", () => {
     render(<Accommodation />);
 
+    const noteHeading = screen.getByRole("heading", {
+      name: "A note about the night before",
+      level: 2,
+    });
+    const nightBeforeNote = screen.getByText(
+      /We’re hosting a relaxed get-together at Rise Hall/,
+    );
     const headings = [
       "How much are the rooms?",
       "I only want to stay at Rise Hall on the night of the wedding - is that okay?",
-      "A note about the night before",
       "Nearby hotels",
     ];
+
+    expect(
+      noteHeading.compareDocumentPosition(screen.getByText(headings[0])),
+    ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+    expect(nightBeforeNote.closest("details")).toBeNull();
 
     for (const heading of headings) {
       const summary = screen.getByText(heading);
